@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Jesús Gimenez - Tarjeta Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f3f1ec;
+            --bg-card: #ffffff;
+            --fg: #1a1815;
+            --fg-sec: #3d3930;
+            --fg-muted: #7a7468;
+            --accent: #1e4d7b;
+            --accent-lt: #e6f0fa;
+            --accent-md: #2b6da8;
+            --border: #e2dfda;
+            --border-lt: #edebe6;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --green-bd: #bbf7d0;
+            --wa: #075e54;
+            --wa-bg: #ecfdf5;
+            --wa-bd: #a7f3d0;
+            --mail: #b45309;
+            --mail-bg: #fffbeb;
+            --mail-bd: #fde68a;
+            --r: 18px;
+            --sh-s: 0 1px 3px rgba(0,0,0,0.04);
+            --sh-m: 0 4px 20px rgba(0,0,0,0.06);
+            --sh-l: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+
+        body{
+            font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);
+            min-height:100vh;overflow-x:hidden;line-height:1.7;-webkit-font-smoothing:antialiased;
+        }
+
+        .wrap{max-width:680px;margin:0 auto;padding:0 20px 64px}
+
+        .hdr{
+            background:var(--bg-card);border-radius:0 0 32px 32px;
+            padding:52px 36px 36px;text-align:center;box-shadow:var(--sh-m);
+            position:relative;overflow:hidden;
+        }
+
+        .hdr::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:6px;
+            background:linear-gradient(90deg,var(--accent),var(--accent-md),var(--accent));
+        }
+
+        .foto{
+            width:160px;height:160px;margin:0 auto 24px;border-radius:50%;
+            overflow:hidden;box-shadow:var(--sh-l);border:5px solid var(--bg-card);outline:2px solid var(--border);
+        }
+
+        .foto img{width:100%;height:100%;object-fit:cover;display:block}
+
+        .hdr h1{
+            font-family:'DM Serif Display',serif;font-size:2.6rem;font-weight:400;
+            color:var(--fg);margin-bottom:6px;letter-spacing:-0.02em;
+        }
+
+        .hdr .rol{
+            font-size:1rem;font-weight:600;color:var(--accent);
+            text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;
+        }
+
+        .hdr .loc{
+            font-size:1rem;color:var(--fg-muted);
+            display:flex;align-items:center;justify-content:center;gap:7px;
+        }
+        .hdr .loc i{font-size:0.85rem;color:var(--accent)}
+
+        .cbar{
+            display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;
+            margin:-22px 20px 28px;position:relative;z-index:2;
+        }
+
+        .cbtn{
+            display:flex;flex-direction:column;align-items:center;gap:8px;
+            padding:22px 10px 18px;border:none;border-radius:var(--r);
+            font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:700;
+            cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;
+            box-shadow:var(--sh-m);
+        }
+        .cbtn:active{transform:scale(0.96)}
+        .cbtn i{font-size:1.5rem}
+        .cbtn.ll{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bd)}
+        .cbtn.em{background:var(--mail-bg);color:var(--mail);border:1.5px solid var(--mail-bd)}
+        .cbtn.wa{background:var(--wa-bg);color:var(--wa);border:1.5px solid var(--wa-bd)}
+
+        /* ====== DATOS DE CONTACTO ====== */
+        .datos-sec{
+            background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);
+            padding:24px 28px;margin-bottom:18px;box-shadow:var(--sh-s);
+            opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;
+        }
+        .datos-sec.vis{opacity:1;transform:translateY(0)}
+
+        .datos-sec .shdr{
+            display:flex;align-items:center;gap:14px;margin-bottom:16px;
+            padding-bottom:14px;border-bottom:1px solid var(--border-lt);
+        }
+        .datos-sec .shdr h2{
+            font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;color:var(--fg);
+        }
+
+        .dato-row{
+            display:flex;align-items:center;gap:14px;padding:12px 16px;
+            background:var(--bg);border-radius:12px;margin-bottom:10px;
+            border:1px solid var(--border-lt);
+        }
+        .dato-row:last-child{margin-bottom:0}
+
+        .dato-ico{
+            width:38px;height:38px;border-radius:10px;background:var(--accent-lt);
+            display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        }
+        .dato-ico i{font-size:0.92rem;color:var(--accent)}
+
+        .dato-info{flex:1;min-width:0}
+
+        .dato-label{
+            font-size:0.72rem;font-weight:700;color:var(--fg-muted);
+            text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1px;
+        }
+
+        .dato-val{
+            font-size:0.95rem;font-weight:600;color:var(--fg);
+            word-break:break-all;
+        }
+
+        .dato-copy{
+            width:36px;height:36px;border-radius:8px;border:1px solid var(--border);
+            background:var(--bg-card);display:flex;align-items:center;justify-content:center;
+            cursor:pointer;flex-shrink:0;transition:background 0.2s,color 0.2s;
+            color:var(--fg-muted);
+        }
+        .dato-copy:hover{background:var(--accent-lt);color:var(--accent)}
+        .dato-copy:active{transform:scale(0.92)}
+        .dato-copy i{font-size:0.82rem}
+
+        .dato-copy.copiado{
+            background:var(--green-bg);color:var(--green);border-color:var(--green-bd);
+        }
+
+        /* ====== VIDEO ====== */
+        .vid-sec{
+            background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);
+            padding:30px 28px;margin-bottom:18px;box-shadow:var(--sh-s);
+            opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;
+        }
+        .vid-sec.vis{opacity:1;transform:translateY(0)}
+
+        .vid-hdr{
+            display:flex;align-items:center;gap:14px;margin-bottom:20px;
+            padding-bottom:16px;border-bottom:1px solid var(--border-lt);
+        }
+        .vid-ico{
+            width:40px;height:40px;border-radius:10px;background:var(--accent-lt);
+            display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        }
+        .vid-ico i{font-size:1rem;color:var(--accent)}
+        .vid-hdr h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;color:var(--fg)}
+
+        .vid-wrap{
+            position:relative;width:100%;border-radius:14px;overflow:hidden;
+            background:#1a1815;box-shadow:var(--sh-m);
+        }
+        .vid-wrap video{width:100%;display:block;border-radius:14px}
+
+        .vid-placeholder{
+            position:relative;width:100%;padding-top:56.25%;
+            background:linear-gradient(135deg,#1a1815,#2a2520);border-radius:14px;
+        }
+        .vid-placeholder-inner{
+            position:absolute;inset:0;display:flex;flex-direction:column;
+            align-items:center;justify-content:center;gap:14px;
+        }
+        .play-icon{
+            width:72px;height:72px;border-radius:50%;
+            background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);
+            display:flex;align-items:center;justify-content:center;
+        }
+        .play-icon i{font-size:1.6rem;color:rgba(255,255,255,0.5);margin-left:4px}
+        .vid-placeholder-inner p{font-size:0.95rem;color:rgba(255,255,255,0.35);font-weight:500}
+        .vid-hint{margin-top:12px;font-size:0.82rem;color:var(--fg-muted);text-align:center;font-style:italic}
+
+        /* ====== SECCIONES ====== */
+        .sec{
+            background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r);
+            padding:30px 28px;margin-bottom:18px;box-shadow:var(--sh-s);
+            opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;
+        }
+        .sec.vis{opacity:1;transform:translateY(0)}
+
+        .shdr{
+            display:flex;align-items:center;gap:14px;margin-bottom:20px;
+            padding-bottom:16px;border-bottom:1px solid var(--border-lt);
+        }
+        .sico{
+            width:40px;height:40px;border-radius:10px;background:var(--accent-lt);
+            display:flex;align-items:center;justify-content:center;flex-shrink:0;
+        }
+        .sico i{font-size:1rem;color:var(--accent)}
+        .shdr h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;color:var(--fg)}
+
+        .ptxt{font-size:1.05rem;color:var(--fg-sec);line-height:1.85}
+
+        .qdata{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+        .qd{background:var(--bg);border-radius:12px;padding:16px 18px}
+        .qd .lb{font-size:0.78rem;font-weight:700;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px}
+        .qd .vl{font-size:1rem;font-weight:700;color:var(--fg)}
+
+        .tl{position:relative}
+        .ti{position:relative;padding-left:28px;padding-bottom:28px}
+        .ti:last-child{padding-bottom:0}
+        .ti::before{content:'';position:absolute;left:5px;top:10px;bottom:0;width:2px;background:var(--border)}
+        .ti:last-child::before{display:none}
+        .ti::after{content:'';position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent-lt);border:2.5px solid var(--accent)}
+
+        .tp{font-size:0.82rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+        .tr{font-size:1.08rem;font-weight:700;color:var(--fg);margin-bottom:2px;line-height:1.35}
+        .tpl{font-size:0.92rem;color:var(--fg-muted);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+        .tpl i{font-size:0.78rem}
+        .td{font-size:0.95rem;color:var(--fg-sec);line-height:1.7}
+
+        .sg{margin-bottom:20px}
+        .sg:last-child{margin-bottom:0}
+        .sgt{font-size:0.82rem;font-weight:700;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px}
+        .stg{display:flex;flex-wrap:wrap;gap:8px}
+        .stag{font-size:0.92rem;padding:7px 16px;background:var(--bg);border:1px solid var(--border);border-radius:24px;color:var(--fg-sec);font-weight:500}
+
+        .lr{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+        .lr:last-child{margin-bottom:0}
+        .ll-n{font-size:1rem;font-weight:600;color:var(--fg);min-width:100px}
+        .lb-r{flex:1;height:10px;background:var(--border-lt);border-radius:5px;overflow:hidden}
+        .lf{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--accent-md));transition:width 1s ease;width:0}
+        .lv{font-size:0.82rem;font-weight:700;color:var(--accent);min-width:80px;text-align:right}
+
+        .ei{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border-lt)}
+        .ei:last-child{border-bottom:none;padding-bottom:0}
+        .eic{width:42px;height:42px;border-radius:10px;background:var(--accent-lt);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+        .eic i{font-size:1rem;color:var(--accent)}
+        .et{font-size:0.78rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+        .ed{font-size:1rem;color:var(--fg-sec);line-height:1.5}
+
+        .disp{display:flex;align-items:center;gap:10px;padding:16px 20px;background:var(--green-bg);border:1.5px solid var(--green-bd);border-radius:12px;margin-top:18px}
+        .disp .dot{width:11px;height:11px;border-radius:50%;background:var(--green);animation:bk 2s ease-in-out infinite}
+        @keyframes bk{0%,100%{opacity:1}50%{opacity:0.35}}
+        .disp span{font-size:1rem;font-weight:600;color:var(--green)}
+
+        .ftr{text-align:center;padding:32px 0 0}
+        .ftr p{font-size:0.82rem;color:var(--fg-muted);opacity:0.45}
+
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+        @media(min-width:720px){.wrap{padding:0 28px 64px}}
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+
+    <header class="hdr">
+        <div class="foto">
+            <img src="https://z-cdn-media.chatglm.cn/files/fbccaf61-6277-4b00-9168-65b45ebaa4f5.jpeg?auth_key=1875614322-b3516dc353034131992f577c81caed72-0-7d95ec46bb3c4926bf6fc0813e24b0c2" alt="Jesús Gimenez">
+        </div>
+        <h1>Jesús Gimenez</h1>
+        <p class="rol">Atención al Cliente · Administrativo · Operaciones</p>
+        <p class="loc"><i class="fa-solid fa-location-dot"></i> Lunlunta, Mendoza, Argentina</p>
+    </header>
+
+    <nav class="cbar" aria-label="Contacto directo">
+        <!-- mailto: abre la app de correo predeterminada del celular -->
+        <a href="tel:+5491176403469" class="cbtn ll"><i class="fa-solid fa-phone"></i>Llamar</a>
+        <a href="mailto:jesusemmanuelgimenez@gmail.com?subject=Contacto%20desde%20tarjeta%20de%20presentaci%C3%B3n" class="cbtn em"><i class="fa-solid fa-envelope"></i>Email</a>
+        <a href="https://wa.me/5491176403469?text=Hola%20Jes%C3%BAs%2C%20te%20contacto%20desde%20tu%20tarjeta%20digital." class="cbtn wa"><i class="fa-brands fa-whatsapp"></i>WhatsApp</a>
+    </nav>
+
+    <!-- DATOS DE CONTACTO VISIBLES -->
+    <section class="datos-sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-address-book"></i></div>
+            <h2>Datos de Contacto</h2>
+        </div>
+        <div class="dato-row">
+            <div class="dato-ico"><i class="fa-solid fa-phone"></i></div>
+            <div class="dato-info">
+                <p class="dato-label">Teléfono</p>
+                <p class="dato-val">+54 9 11 7640-3469</p>
+            </div>
+            <button class="dato-copy" onclick="copiarDato('+54 9 11 7640-3469', this)" aria-label="Copiar teléfono">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+        <div class="dato-row">
+            <div class="dato-ico"><i class="fa-solid fa-envelope"></i></div>
+            <div class="dato-info">
+                <p class="dato-label">Email</p>
+                <p class="dato-val">jesusemmanuelgimenez@gmail.com</p>
+            </div>
+            <button class="dato-copy" onclick="copiarDato('jesusemmanuelgimenez@gmail.com', this)" aria-label="Copiar email">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+        <div class="dato-row">
+            <div class="dato-ico"><i class="fa-brands fa-whatsapp"></i></div>
+            <div class="dato-info">
+                <p class="dato-label">WhatsApp</p>
+                <p class="dato-val">+54 9 11 7640-3469</p>
+            </div>
+            <a href="https://wa.me/5491176403469?text=Hola%20Jes%C3%BAs%2C%20te%20contacto%20desde%20tu%20tarjeta%20digital." class="dato-copy" aria-label="Abrir WhatsApp" style="text-decoration:none">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+        <div class="dato-row">
+            <div class="dato-ico"><i class="fa-solid fa-location-dot"></i></div>
+            <div class="dato-info">
+                <p class="dato-label">Ubicación</p>
+                <p class="dato-val">Lunlunta, Mendoza, Argentina</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="vid-sec">
+        <div class="vid-hdr">
+            <div class="vid-ico"><i class="fa-solid fa-video"></i></div>
+            <h2>Presentación</h2>
+        </div>
+        <div class="vid-wrap">
+            <video id="miVideo" style="display:none" controls preload="metadata" playsinline src="presentacion-jesus.mp4"></video>
+            <div id="vidPlaceholder" class="vid-placeholder">
+                <div class="vid-placeholder-inner">
+                    <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                    <p>Video de presentación</p>
+                </div>
+            </div>
+        </div>
+        <p id="vidHint" class="vid-hint">Próximamente: video presentando mis habilidades y experiencia</p>
+    </section>
+
+    <section class="sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-user"></i></div>
+            <h2>Perfil Profesional</h2>
+        </div>
+        <p class="ptxt">Trabajador versátil, responsable y con gran capacidad de adaptación a distintos rubros. Cuento con más de 12 años de experiencia práctica en atención al público, manejo de caja, tareas administrativas y trabajo en equipo, tanto en Argentina como en el exterior (México y Brasil). Rápida curva de aprendizaje para herramientas técnicas y operativas.</p>
+        <div class="qdata">
+            <div class="qd"><p class="lb">Experiencia</p><p class="vl">+12 años</p></div>
+            <div class="qd"><p class="lb">Países</p><p class="vl">Argentina, México, Brasil</p></div>
+            <div class="qd"><p class="lb">Incorporación</p><p class="vl">Inmediata</p></div>
+            <div class="qd"><p class="lb">Disponibilidad</p><p class="vl">Completa</p></div>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-briefcase"></i></div>
+            <h2>Experiencia Laboral</h2>
+        </div>
+        <div class="tl">
+            <div class="ti">
+                <p class="tp">2020 – Actualidad</p>
+                <p class="tr">Soporte Técnico y Gestión de Datos</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Independiente, Mendoza</p>
+                <p class="td">Manejo de herramientas informáticas para la resolución de problemas técnicos y análisis de datos. Gestión administrativa y operativa orientada a resultados.</p>
+            </div>
+            <div class="ti">
+                <p class="tp">2023 – 2024</p>
+                <p class="tr">Atención al Cliente / Host</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Lions Liberdade, Brasil</p>
+                <p class="td">Recepción de clientes, asistencia en sala y resolución de consultas en un entorno dinámico. Comunicación directa en portugués.</p>
+            </div>
+            <div class="ti">
+                <p class="tp">2019 – 2020</p>
+                <p class="tr">Atención al Público / Crupier</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Park Hyatt, Mendoza</p>
+                <p class="td">Atención directa al cliente bajo estrictos estándares de calidad. Manejo de valores y efectivo con absoluta transparencia y responsabilidad.</p>
+            </div>
+            <div class="ti">
+                <p class="tp">2018 – 2019</p>
+                <p class="tr">Encargado de Personal y Campo</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Finca Bautem, Mendoza</p>
+                <p class="td">Organización de tareas diarias, control de asistencia y coordinación de equipos de trabajo para el cumplimiento de objetivos operativos.</p>
+            </div>
+            <div class="ti">
+                <p class="tp">2016 – 2017</p>
+                <p class="tr">Encargado de Local</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Mar y Monte, México</p>
+                <p class="td">Administración general del establecimiento: manejo de caja, relación con proveedores, control de stock y organización del salón.</p>
+            </div>
+            <div class="ti">
+                <p class="tp">2011 – 2016</p>
+                <p class="tr">Encargado de Turno y Empleado de Salón</p>
+                <p class="tpl"><i class="fa-solid fa-map-pin"></i> Arena Maipú, Mendoza</p>
+                <p class="td">Ingreso como asistente de sala con posterior promoción a encargado por buen desempeño. Control de operaciones, atención al cliente y resolución de conflictos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-toolbox"></i></div>
+            <h2>Herramientas y Habilidades</h2>
+        </div>
+        <div class="sg">
+            <p class="sgt">Informática</p>
+            <div class="stg">
+                <span class="stag">Excel</span><span class="stag">Word</span><span class="stag">PowerPoint</span>
+                <span class="stag">Sistemas de Facturación</span><span class="stag">Control de Stock</span><span class="stag">Gestión Interna</span>
+            </div>
+        </div>
+        <div class="sg">
+            <p class="sgt">Técnicas</p>
+            <div class="stg"><span class="stag">Python</span><span class="stag">LaTeX</span><span class="stag">Redacción Técnica</span><span class="stag">Análisis de Datos</span></div>
+        </div>
+        <div class="sg">
+            <p class="sgt">Competencias Profesionales</p>
+            <div class="stg">
+                <span class="stag">Manejo de Caja</span><span class="stag">Atención al Público</span><span class="stag">Proactividad</span>
+                <span class="stag">Resolución de Conflictos</span><span class="stag">Trabajo en Equipo</span><span class="stag">Gestión de Personal</span><span class="stag">Relación con Proveedores</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-language"></i></div>
+            <h2>Idiomas</h2>
+        </div>
+        <div class="lr">
+            <span class="ll-n">Español</span>
+            <div class="lb-r"><div class="lf" data-w="100"></div></div>
+            <span class="lv">Nativo</span>
+        </div>
+        <div class="lr">
+            <span class="ll-n">Portugués</span>
+            <div class="lb-r"><div class="lf" data-w="75"></div></div>
+            <span class="lv">Avanzado</span>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="shdr">
+            <div class="sico"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2>Educación</h2>
+        </div>
+        <div class="ei">
+            <div class="eic"><i class="fa-solid fa-building-columns"></i></div>
+            <div><p class="et">Terciario</p><p class="ed">1.er año cursado — CECIT (Centro de Estudios de Capacitación Técnica)</p></div>
+        </div>
+        <div class="ei">
+            <div class="eic"><i class="fa-solid fa-school"></i></div>
+            <div><p class="et">Secundario</p><p class="ed">Título secundario completo</p></div>
+        </div>
+    </section>
+
+    <section class="sec">
+        <div class="disp"><span class="dot"></span><span>Disponibilidad horaria completa — Incorporación inmediata</span></div>
+    </section>
+
+    <footer class="ftr"><p>Tarjeta de presentación digital — Jesús Gimenez</p></footer>
+</div>
+
+<script>
+    /* ====== Copiar dato al portapapeles ====== */
+    function copiarDato(texto, btn) {
+        navigator.clipboard.writeText(texto).then(function() {
+            btn.classList.add('copiado');
+            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+            setTimeout(function() {
+                btn.classList.remove('copiado');
+                btn.innerHTML = '<i class="fa-regular fa-copy"></i>';
+            }, 2000);
+        });
+    }
+
+    /* ====== Video ====== */
+    var vid = document.getElementById('miVideo');
+    var ph = document.getElementById('vidPlaceholder');
+    var hint = document.getElementById('vidHint');
+
+    vid.addEventListener('canplay', function() {
+        vid.style.display = 'block'; ph.style.display = 'none'; hint.style.display = 'none';
+    });
+    vid.addEventListener('error', function() {
+        vid.style.display = 'none'; ph.style.display = 'block'; hint.style.display = 'block';
+    });
+    if (vid.readyState >= 3) {
+        vid.style.display = 'block'; ph.style.display = 'none'; hint.style.display = 'none';
+    }
+
+    /* ====== Scroll reveal ====== */
+    var secs = document.querySelectorAll('.sec,.vid-sec,.datos-sec');
+    var obs = new IntersectionObserver(function(e) {
+        e.forEach(function(en) {
+            if (en.isIntersecting) { en.target.classList.add('vis'); obs.unobserve(en.target); }
+        });
+    }, { threshold: 0.08 });
+    secs.forEach(function(s) { obs.observe(s); });
+
+    /* ====== Barras idiomas ====== */
+    var fills = document.querySelectorAll('.lf');
+    var bobs = new IntersectionObserver(function(e) {
+        e.forEach(function(en) {
+            if (en.isIntersecting) {
+                en.target.style.width = en.target.getAttribute('data-w') + '%';
+                bobs.unobserve(en.target);
+            }
+        });
+    }, { threshold: 0.4 });
+    fills.forEach(function(b) { bobs.observe(b); });
+</script>
+
+</body>
+</html>
